@@ -1,6 +1,6 @@
-[gd_scene load_steps=85 format=3 uid="uid://2o6ch6ioxxlh"]
+[gd_scene load_steps=86 format=3 uid="uid://2o6ch6ioxxlh"]
 
-[ext_resource type="Script" uid="uid://c1yalce4188jh" path="res://scrpits/player.gd" id="1_2fvbb"]
+[ext_resource type="Script" uid="uid://c1yalce4188jh" path="res://scene/player/player.gd" id="1_2fvbb"]
 [ext_resource type="Texture2D" uid="uid://bruslgw43o0fw" path="res://texture/Without Sword (for gun)/shadow.png" id="1_g2vtq"]
 [ext_resource type="Texture2D" uid="uid://0pn7n051p4wd" path="res://texture/Without Sword (for gun)/Down/04 Stranded - Pack 4 back up-Idle Down.png" id="1_xo3ru"]
 [ext_resource type="Texture2D" uid="uid://72fsww414e5y" path="res://texture/Without Sword (for gun)/04 Stranded - Pack 4 back up-Death.png" id="2_2fvbb"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dafmnb68etdcu" path="res://texture/Without Sword (for gun)/left right/R move.png" id="6_dk1vr"]
 [ext_resource type="Texture2D" uid="uid://d0kbahlxf482d" path="res://texture/Without Sword (for gun)/Up/04 Stranded - Pack 4 back up-Idle Up.png" id="7_34jf3"]
 [ext_resource type="Texture2D" uid="uid://bntafojuggskn" path="res://texture/Without Sword (for gun)/Up/04 Stranded - Pack 4 back up-Move Up.png" id="8_u7b46"]
+[ext_resource type="PackedScene" uid="uid://dv10m58eiebrn" path="res://scene/weapon/BaseWeapon.tscn" id="10_oypl4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j4wxg"]
 radius = 6.0
@@ -348,7 +349,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xsw3c")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 12.0
 }, {
@@ -593,7 +594,11 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_2fvbb")
+speed = 80
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0, -3)
@@ -608,7 +613,16 @@ shape = SubResource("CapsuleShape2D_j4wxg")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(13, -11)
 sprite_frames = SubResource("SpriteFrames_u7b46")
-animation = &"left_move"
+animation = &"die"
+autoplay = "down_idle"
+
+[node name="Weapon" type="Node2D" parent="Body"]
+position = Vector2(2, -9)
+rotation = 6.2831855
+
+[node name="BaseWeapon" parent="Body/Weapon" instance=ExtResource("10_oypl4")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
+
+[connection signal="animation_finished" from="Body/AnimatedSprite2D" to="." method="signal_on_animated_sprite_2d_animation_finished"]

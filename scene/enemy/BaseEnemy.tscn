@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbkn8x4peo8i8"]
+
+[ext_resource type="Script" uid="uid://cmojw80i4vk1e" path="res://scene/enemy/base_enemy.gd" id="1_0h2n2"]
+[ext_resource type="Texture2D" uid="uid://bruslgw43o0fw" path="res://texture/Without Sword (for gun)/shadow.png" id="2_opbg4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s2t8x"]
+radius = 6.0
+height = 18.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ased8"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="BaseEnemy" type="CharacterBody2D"]
+script = ExtResource("1_0h2n2")
+speed = null
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, -3)
+texture = ExtResource("2_opbg4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("CapsuleShape2D_s2t8x")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
+position = Vector2(13, -11)
+sprite_frames = SubResource("SpriteFrames_ased8")
