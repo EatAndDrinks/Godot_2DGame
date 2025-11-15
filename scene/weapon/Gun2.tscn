@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b20se0yj6xjy8"]
+
+[ext_resource type="PackedScene" uid="uid://dv10m58eiebrn" path="res://scene/weapon/BaseWeapon.tscn" id="1_arx3a"]
+[ext_resource type="Texture2D" uid="uid://bk10iqntyeinh" path="res://texture/Guns/gun2.png" id="2_a5qou"]
+
+[node name="BaseWeapon" instance=ExtResource("1_arx3a")]
+bullet_max = 60
+damage = 3
+weapon_rof = 0.05
+weapon_name = "2号枪械"
+weapon_reload_time = 1.0
+
+[node name="WeaponSprite" parent="." index="0"]
+texture = ExtResource("2_a5qou")

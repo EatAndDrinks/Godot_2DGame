@@ -8,7 +8,7 @@
 script = ExtResource("1_ii8o3")
 bullet = ExtResource("2_d1kll")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="WeaponSprite" type="Sprite2D" parent="."]
 position = Vector2(3, -1)
 texture = ExtResource("1_qficx")
 

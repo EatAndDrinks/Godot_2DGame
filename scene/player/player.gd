@@ -8,9 +8,9 @@ class_name Player
 var current_hp:
 	set(_value):
 		current_hp = _value
+		PlayerManager.on_player_hp_change.emit(_value , max_hp)	#每次血量变动都触发一次信号
 		if _value <= 0:
-			PlayerManager.is_player_death.emit()
-			 
+			PlayerManager.is_player_death.emit()	#检测当前血量，如果小于0则发送信号
 		
 var is_death = false
 
@@ -78,12 +78,14 @@ func weapon_look_at():
 		weapon.z_index = -1
 
 func is_player_death():
+	'''角色死亡'''
 	is_death = true
-	weapon.visible = false
+	weapon.visible = false	#隐藏武器
 	print('die')
 	anime.play('die')
 
 
 func signal_on_animated_sprite_2d_animation_finished() -> void:
+	'''在播放完死亡动画后隐藏角色'''
 	if anime.animation == 'die':
 		self.visible = false

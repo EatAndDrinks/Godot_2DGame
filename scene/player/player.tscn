@@ -620,7 +620,8 @@ autoplay = "down_idle"
 position = Vector2(2, -9)
 rotation = 6.2831855
 
-[node name="BaseWeapon" parent="Body/Weapon" instance=ExtResource("10_oypl4")]
+[node name="BaseWeapon" parent="Body/Weapon" node_paths=PackedStringArray("player") instance=ExtResource("10_oypl4")]
+player = NodePath("../../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_smoothed = true
