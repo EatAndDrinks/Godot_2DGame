@@ -17,7 +17,6 @@ animations = [{
 
 [node name="BaseEnemy" type="CharacterBody2D"]
 script = ExtResource("1_0h2n2")
-speed = null
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0, -3)
@@ -32,3 +31,4 @@ shape = SubResource("CapsuleShape2D_s2t8x")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(13, -11)
 sprite_frames = SubResource("SpriteFrames_ased8")
+animation = &"idle"

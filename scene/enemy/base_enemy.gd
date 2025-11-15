@@ -65,8 +65,7 @@ func signal_on_attack_area_body_exited(body: Node2D) -> void:
 		is_attack = false
 		current_target = null
 
-
-func signal_on_animated_sprite_2d_animation_finished() -> void:
-	'''检测正播放结束的动画是否是攻击，并在结束后造成伤害'''
-	if anim.animation == 'attack':
+func _on_animated_sprite_2d_frame_changed() -> void:
+	'''检测正播放结束的动画是否是攻击，并在第4帧造成伤害'''
+	if anim.animation == 'attack' and anim.frame == 4:
 		GameManager.damage(self , current_target)

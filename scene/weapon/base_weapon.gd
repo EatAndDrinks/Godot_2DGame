@@ -17,7 +17,9 @@ var current_rof_tick = 0			#射击计时器
 @onready var shoot_point: Node2D = $ShootPoint
 
 func _ready() -> void:
+	'''赋值'''
 	current_bullet = bullet_max
+	'''链接信号'''
 	PlayerManager.on_weapon_change.emit(self)
 	PlayerManager.on_bullet_change.emit(current_bullet , bullet_max)#切换武器时切换文本
 

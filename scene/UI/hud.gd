@@ -6,6 +6,7 @@ extends Control
 @onready var weapon_picture: TextureRect = $"../WeaponControl/WeaponPicture"
 
 func _ready() -> void:
+	'''链接信号'''
 	PlayerManager.on_player_hp_change.connect(on_player_hp_change)
 	PlayerManager.on_bullet_change.connect(on_bullet_change)
 	PlayerManager.on_weapon_reload.connect(on_weapon_reload)

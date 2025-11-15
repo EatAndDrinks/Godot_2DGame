@@ -349,6 +349,8 @@ sources/0 = SubResource("TileSetAtlasSource_hr7lf")
 
 [node name="Main" type="Node2D"]
 
+[node name="UI" parent="." instance=ExtResource("4_yiwpq")]
+
 [node name="Map" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -366,6 +368,4 @@ tile_set = SubResource("TileSet_yiwpq")
 position = Vector2(171, 127)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("3_hr7lf")]
-position = Vector2(8, 33)
-
-[node name="UI" parent="." instance=ExtResource("4_yiwpq")]
+position = Vector2(112, 115)

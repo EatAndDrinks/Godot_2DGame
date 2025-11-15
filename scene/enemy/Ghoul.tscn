@@ -228,7 +228,6 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ldgbk"]
 
 [node name="BaseEnemy" instance=ExtResource("1_2d8q5")]
-speed = 50
 
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, -12)
@@ -250,7 +249,6 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_ldgbk")
 debug_color = Color(0.84032613, 0.3572105, 0.37858492, 0.41960785)
 
-[connection signal="animation_finished" from="Body/AnimatedSprite2D" to="." method="signal_on_animated_sprite_2d_animation_finished"]
-[connection signal="frame_changed" from="Body/AnimatedSprite2D" to="." method="signal_on_animated_sprite_2d_frame_changed"]
+[connection signal="frame_changed" from="Body/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="body_entered" from="AttackArea" to="." method="signal_on_attack_area_body_entered"]
 [connection signal="body_exited" from="AttackArea" to="." method="signal_on_attack_area_body_exited"]
