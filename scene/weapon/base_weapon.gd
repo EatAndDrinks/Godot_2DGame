@@ -38,6 +38,7 @@ func shoot():
 	instance.global_position = shoot_point.global_position
 	instance.dir = global_position.direction_to(get_global_mouse_position())
 	get_tree().root.add_child(instance)
+	instance.current_weapon = self
 	current_bullet -= 1			#减少子弹
 	PlayerManager.on_bullet_change.emit(current_bullet , bullet_max)	#每次射击，触发子弹改变信号
 	if current_bullet <= 0:

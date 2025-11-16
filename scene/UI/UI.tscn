@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqo0q148ntrb6"]
+[gd_scene load_steps=7 format=3 uid="uid://dqo0q148ntrb6"]
 
 [ext_resource type="Script" uid="uid://bh484oe7s3vww" path="res://scene/UI/hud.gd" id="1_1f6md"]
+[ext_resource type="Script" uid="uid://bflvrkc132fot" path="res://scene/UI/ui.gd" id="1_l1ivd"]
 [ext_resource type="Texture2D" uid="uid://rsfj2l2m4kxo" path="res://texture/Guns/gun1.png" id="2_p06jy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p06jy"]
@@ -17,7 +18,15 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_viftj"]
+bg_color = Color(0.21, 0.21, 0.21, 0.5882353)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_l1ivd")
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
@@ -56,6 +65,19 @@ offset_right = 10.0
 offset_bottom = 20.0
 text = "HP:"
 
+[node name="Level" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -17.0
+offset_top = 9.0
+offset_right = 25.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_viftj")
+text = "关卡1"
+
 [node name="WeaponControl" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 3
@@ -63,8 +85,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
+offset_left = -97.0
+offset_top = -71.0
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -117,3 +139,48 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 8
 text = "30/30"
+
+[node name="Pause" type="Button" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.589355
+offset_top = 13.0
+offset_right = -16.0
+offset_bottom = 38.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 10
+text = "暂停"
+
+[node name="PauseMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -94.0
+offset_right = 93.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ReturnGame" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "返回游戏"
+
+[node name="ReturnMenu" type="Button" parent="PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "返回主菜单"
+
+[connection signal="pressed" from="Pause" to="." method="_on_pause_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ReturnGame" to="." method="_on_return_game_pressed"]
+[connection signal="pressed" from="PauseMenu/VBoxContainer/ReturnMenu" to="." method="_on_return_menu_pressed"]

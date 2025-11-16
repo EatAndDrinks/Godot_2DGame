@@ -4,6 +4,7 @@ extends Control
 @onready var bullet: Label = $"../WeaponControl/Bullet"
 @onready var weapon_name: Label = $"../WeaponControl/WeaponName"
 @onready var weapon_picture: TextureRect = $"../WeaponControl/WeaponPicture"
+@onready var level: Label = $Level
 
 func _ready() -> void:
 	'''链接信号'''
@@ -11,6 +12,7 @@ func _ready() -> void:
 	PlayerManager.on_bullet_change.connect(on_bullet_change)
 	PlayerManager.on_weapon_reload.connect(on_weapon_reload)
 	PlayerManager.on_weapon_change.connect(on_weapon_change)
+	LevelManager.on_level_change.connect(on_level_change)
 	
 	
 func on_player_hp_change(current_hp , max_hp):
@@ -26,3 +28,7 @@ func on_weapon_reload():
 func on_weapon_change(weapon :BaseWeapon):
 	weapon_name.text = weapon.weapon_name
 	weapon_picture.texture = weapon.weapon_sprite.texture
+	
+func on_level_change(level_data :LevelData):
+	level.text = "关卡" + str(LevelManager.current_level)
+	

@@ -9,15 +9,24 @@ var player_dead = false
 var is_attack := false
 var is_death := false
 var current_target = null
-var current_hp 
+var current_hp:
+	set(value):
+		current_hp = value
+		if current_hp <= 0:
+			on_death.emit()
+			is_death = true
 
+signal on_death
 @onready var anim: AnimatedSprite2D = $Body/AnimatedSprite2D
 @onready var body: Node2D = $Body
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 
 func _ready() -> void:
+	EnemyManager.enemies.append(self)			#添加自己到刷怪队列
 	current_hp = max_hp
 	PlayerManager.is_player_death.connect(player_is_dead)
+	on_death.connect(death)
 
 func _physics_process(delta: float) -> void:
 	if player_dead:#如果player死亡则不再进行攻击
@@ -28,6 +37,7 @@ func _physics_process(delta: float) -> void:
 		velocity = global_position.direction_to(GameManager.player.global_position) * speed 
 		changeAnim()
 		move_and_slide()
+		
 	attackAnime()
 
 func changeAnim():
@@ -69,3 +79,18 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	'''检测正播放结束的动画是否是攻击，并在第4帧造成伤害'''
 	if anim.animation == 'attack' and anim.frame == 4:
 		GameManager.damage(self , current_target)
+		
+		
+func _exit_tree() -> void:
+	'''怪物死亡时触发信号'''
+	EnemyManager.enemies.erase(self)
+	EnemyManager.on_enemy_death.emit()
+	EnemyManager.check_enemy()
+	
+func death():
+	anim.play("death")
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if anim.animation == 'death':
+		queue_free()
