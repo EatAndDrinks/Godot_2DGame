@@ -1,6 +1,7 @@
-[gd_scene load_steps=36 format=3 uid="uid://dkbejqd7y4yp8"]
+[gd_scene load_steps=37 format=3 uid="uid://dkbejqd7y4yp8"]
 
 [ext_resource type="PackedScene" uid="uid://dbkn8x4peo8i8" path="res://scene/enemy/BaseEnemy.tscn" id="1_2d8q5"]
+[ext_resource type="PackedScene" uid="uid://bqek8q3iim670" path="res://scene/damage_float_text.tscn" id="2_3ihqa"]
 [ext_resource type="Texture2D" uid="uid://codrlsgsym8mk" path="res://texture/Ghoul/Attack.png" id="2_fd232"]
 [ext_resource type="Texture2D" uid="uid://bwvcdcp0epp4t" path="res://texture/Ghoul/death.png" id="3_ldgbk"]
 [ext_resource type="Texture2D" uid="uid://c3a3osykhlqnj" path="res://texture/Ghoul/Wake.png" id="4_3ihqa"]
@@ -228,7 +229,8 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ldgbk"]
 
 [node name="BaseEnemy" instance=ExtResource("1_2d8q5")]
-collision_layer = 4
+max_hp = 100
+damage_float = ExtResource("2_3ihqa")
 
 [node name="CollisionShape2D" parent="." index="1"]
 position = Vector2(0, -12)

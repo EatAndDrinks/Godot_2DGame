@@ -16,6 +16,7 @@ animations = [{
 }]
 
 [node name="BaseEnemy" type="CharacterBody2D"]
+collision_layer = 4
 collision_mask = 9
 script = ExtResource("1_0h2n2")
 

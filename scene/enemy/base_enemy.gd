@@ -4,6 +4,7 @@ class_name BaseEnemy
 @export var max_hp = 10
 @export var damage = 5
 @export var speed := 50
+@export var damage_float : PackedScene
 
 var player_dead = false
 var is_attack := false
@@ -11,15 +12,20 @@ var is_death := false
 var current_target = null
 var current_hp:
 	set(value):
+		if current_hp and current_hp - value != 0:
+			on_damaged.emit(value - current_hp)		#每次生命值变化时候发送收到伤害信号
 		current_hp = value
 		if current_hp <= 0:
 			on_death.emit()
 			is_death = true
 
 signal on_death
+signal on_damaged(damaged)
+
 @onready var anim: AnimatedSprite2D = $Body/AnimatedSprite2D
 @onready var body: Node2D = $Body
-@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var coll: CollisionShape2D = $CollisionShape2D
+@onready var shadow: Sprite2D = $Shadow
 
 
 func _ready() -> void:
@@ -27,6 +33,7 @@ func _ready() -> void:
 	current_hp = max_hp
 	PlayerManager.is_player_death.connect(player_is_dead)
 	on_death.connect(death)
+	on_damaged.connect(on_damaged_float)
 
 func _physics_process(delta: float) -> void:
 	if player_dead:#如果player死亡则不再进行攻击
@@ -61,6 +68,22 @@ func player_is_dead():
 	'''主角死亡判断'''
 	player_dead = true
 
+func _exit_tree() -> void:
+	'''怪物死亡时触发信号'''
+	EnemyManager.enemies.erase(self)
+	EnemyManager.on_enemy_death.emit()
+	EnemyManager.check_enemy()
+	
+func death():
+	coll.call_deferred('set_disabled' , true)		#将碰撞体设为false，防止死亡后阻挡子弹
+	shadow.hide()
+	anim.play("death")
+	
+func on_damaged_float(damaged):
+	var damage_text : Node2D = damage_float.instantiate()	#实例化节点
+	damage_text.set_damage(damaged)							#设置伤害数值
+	add_child(damage_text)									#添加到场景树中
+	damage_text.global_position = global_position + Vector2.UP * 20	#设置偏移（无伤大雅）
 
 func signal_on_attack_area_body_entered(body: Node2D) -> void:
 	'''判断进入攻击区域'''
@@ -80,17 +103,6 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	if anim.animation == 'attack' and anim.frame == 4:
 		GameManager.damage(self , current_target)
 		
-		
-func _exit_tree() -> void:
-	'''怪物死亡时触发信号'''
-	EnemyManager.enemies.erase(self)
-	EnemyManager.on_enemy_death.emit()
-	EnemyManager.check_enemy()
-	
-func death():
-	anim.play("death")
-
-
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if anim.animation == 'death':
 		queue_free()
